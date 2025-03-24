@@ -1,0 +1,18 @@
+
+<div class="theme">
+    @if(loading | async){
+
+        <div  class="w-full h-full fixed top-0 left-0 bg-base opacity-90 z-50">
+            <div class="flex justify-center items-center mt-[45vh]">
+              <div class="fas fa-circle-notch fa-spin fa-5x text-primary"></div>
+            </div>
+          </div>
+    }
+    <app-nabvar></app-nabvar>
+    <div class="p-4  bg-sub_base h-screen sm:ml-64 ">
+        <router-outlet />
+    </div>
+</div>
+  
+
+

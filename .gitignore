@@ -1,0 +1,5 @@
+web/node_modules
+web/.vscode
+bakc/node_modules
+web/dist
+bakc/dist
