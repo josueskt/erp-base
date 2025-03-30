@@ -6,6 +6,25 @@
   --color-secondary: var(--color-secondary);
   --color-sub_base: var(--color-sub_base);
 }
+/* Para navegadores basados en WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px; /* Ancho del scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary); /* Color del thumb (barra de desplazamiento) */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--color-secondary); /* Color de la pista */
+}
+
+/* Para Firefox */
+* {
+  scrollbar-color: #4A5568 #E2E8F0; /* thumb track */
+}
+
 
 :root {
   --color-base: #000000; 
@@ -33,5 +52,11 @@
   --color-sub_base: #F6F8D5; 
   --color-primary: #0e2334;  
   --color-secondary: #000000;  
+}
+.theme-purple {
+  --color-base: #2c1c28; 
+  --color-sub_base: #543850; 
+  --color-primary: #ffffff;  
+  --color-secondary: #ff00e6;  
 }
 

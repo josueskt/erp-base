@@ -1,7 +1,8 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-nabvar',
@@ -9,41 +10,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './nabvar.component.html',
   styleUrl: './nabvar.component.css'
 })
-export class NabvarComponent {
+export class NabvarComponent implements OnInit {
+  
+  readonly auth = inject( AuthService)
+  open= false
   menu_des: any[] = [
-  {
-    name: 'Opción 1',
-    direcion: "/profe/crear_autor", icono: "fas fa-user-plus"
-
-  },
-    {
-      name: 'Opción 1',
-      open: false,
-      icono: "fas fa-user-plus",
-      subMenu: [
-        {
-          name: 'Subopción 1-1',
-          open: false,
-           icono: "fas fa-user-plus",
-          subMenu: [
-            { name: 'SubSubopción 1-1-1' ,
-               icono: "fas fa-user-plus",
-               direcion: "/profe/crear_autor",
-             },
-            { name: 'SubSubopción 1-1-2',
-               icono: "fas fa-user-plus",
-               direcion: "/profe/crear_autor",
-             }
-          ]
-        },
-        {
-          name: 'Subopción asdasdasdasd',
-         direcion: "/profe/crear_autor", icono: "fas fa-user-plus"
-
-        
-        }
-      ]
-    }
+ 
    
   ];
 
@@ -62,12 +34,15 @@ export class NabvarComponent {
      this.setTheme(theme);
    }
    setTheme(theme: string) {
-     document.body.classList.remove('theme-dark', 'theme-white','theme-blue');
+     document.body.classList.remove('theme-dark', 'theme-white','theme-blue','theme-purple');
      document.body.classList.add(theme);
    }
    ngOnInit() {
      const savedTheme = localStorage.getItem('theme') || 'theme-orange';
      this.setTheme(savedTheme);
+    this.menu_des =  this.auth.getUserInfo().routs
+
+     console.log( this.auth.getUserInfo().routs)
      
    }
  

@@ -8,6 +8,6 @@ export class LoginService {
 
   constructor(readonly http:HttpClient ) {  }
   login(user:any){
-    return this.http.post<any>('localhost:3000/login',user)
+    return this.http.post<{token:string}>('http://localhost:3000/login',{user:user.user,password:user.password})
   }
 }

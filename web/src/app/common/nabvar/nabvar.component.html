@@ -75,11 +75,16 @@
          
         }
           <li>
-            <div><p>Tema</p>
+            <div>
+              <app-button sty="w-full text-left p-2 text-primary hover:bg-sub_base flex  rounded-lg"  (buttonClicked)="open =!open " label="Ver temas  "></app-button>
             </div>
-            <app-button class="rounded-full" sty="bg-gray-800 rounded-full w-6 h-6 border border-primary"  label=""   (buttonClicked)="changeTheme('theme-dark')" />
-            <app-button label="" sty="bg-white rounded-full w-6 h-6 border border-primary" (buttonClicked)="changeTheme('theme-white')" />
-            <app-button label="" sty="bg-blue-700 rounded-full w-6 h-6 border border-primary" (buttonClicked)="changeTheme('theme-blue')" />
+            <div [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !open, 'max-h-[1000px] opacity-100 scale-y-100': open }">
+
+              <app-button class="rounded-full" sty="bg-gray-800 rounded-full w-6 h-6 border border-primary"  label=""   (buttonClicked)="changeTheme('theme-dark')" />
+              <app-button label="" sty="bg-white rounded-full w-6 h-6 border border-primary" (buttonClicked)="changeTheme('theme-white')" />
+              <app-button label="" sty="bg-blue-700 rounded-full w-6 h-6 border border-primary" (buttonClicked)="changeTheme('theme-blue')" />
+              <app-button label="" sty="bg-purple-700 rounded-full w-6 h-6 border border-primary" (buttonClicked)="changeTheme('theme-purple')" />
+            </div>
           </li>
           <hr>
        </ul>

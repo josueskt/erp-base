@@ -1,5 +1,7 @@
 web/node_modules
 web/.vscode
 bakc/node_modules
+bakc/.env
 web/dist
 bakc/dist
+.vscode

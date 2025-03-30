@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { LoaderService } from './loader.service';
@@ -16,32 +16,28 @@ export const loggerInter: HttpInterceptorFn = (req, next) => {
   });
 
   return next(authReq).pipe(
+    tap((response:any) => {
+      if (response && response.body && response.body.message) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title:   response.body.message,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+    }),
     catchError((error) => {
-    //   if (error.status === 401) {
-    //     alert('No autorizado (401)');
-    //   } else if (error.status === 403) {
-    //     alert('Acceso prohibido (403)');
-    //   } else if (error.status === 404) {
-    //     alert('Recurso no encontrado (404)');
-    //   } else if (error.status === 500) {
-    //     alert('Error interno del servidor (500)');
-    //   } else {
+
         Swal.fire({
             position: "center",
             icon: "error",
-            title: "error"+error.message,
+            title: "error "+error.status+' '+error.error.message,
             showConfirmButton: false,
-            timer: 1500
+            timer: 2000
           });
           
-          
-     // }
-
-      // Puedes hacer un redirect, limpiar token, etc.
-      // if (error.status === 401) {
-      //   localStorage.removeItem('token');
-      //   window.location.href = '/login';
-      // }
+    
 
       return throwError(() => error);
     })

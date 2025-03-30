@@ -5,7 +5,7 @@ export class CreateLoginDto {
     @IsString({message:"ola"})
     user: string 
    @IsString()
-    @IsNotEmpty()
+    @IsNotEmpty({message:"constaseña es requerida"})
     password: string
 
 }

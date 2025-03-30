@@ -17,7 +17,7 @@ export class LoginComponent {
   login(){
     if(this.userForm.value){
       this.loginS.login(this.userForm.value).subscribe({next(value) {
-          
+          localStorage.setItem('token',value.token) 
       },})
     }
       
