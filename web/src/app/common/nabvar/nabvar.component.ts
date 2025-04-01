@@ -16,6 +16,8 @@ export class NabvarComponent implements OnInit {
   open= false
   menu_des: any[] = [
  
+
+    
    
   ];
 
@@ -45,6 +47,10 @@ export class NabvarComponent implements OnInit {
      console.log( this.auth.getUserInfo().routs)
      
    }
+
+   debug(route: string) {
+    console.log('Intentando navegar a:', route);
+  }
  
    @HostListener('document:click', ['$event'])
    onDocumentClick(event: MouseEvent) {

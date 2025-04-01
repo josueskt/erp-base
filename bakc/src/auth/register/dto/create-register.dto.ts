@@ -16,6 +16,16 @@ minLowercase: 1,
     minSymbols: 1},{message:' message: "La contraseña debe tener al menos 8 caracteres, incluyendo 1 mayúscula, 1 minúscula, 1 número y 1 símbolo.'}
 )
 pass:string
+
+@IsString()
+@IsStrongPassword({
+    minLength: 8,       
+minLowercase: 1,    
+    minUppercase: 1,    
+    minNumbers: 1,       
+    minSymbols: 1},{message:' message: "La contraseña debe tener al menos 8 caracteres, incluyendo 1 mayúscula, 1 minúscula, 1 número y 1 símbolo.'}
+)
+passconfirm:string
 fk_profile:string
 
 }

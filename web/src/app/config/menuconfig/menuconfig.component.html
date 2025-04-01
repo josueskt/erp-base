@@ -15,7 +15,7 @@
   
       <div>
         <label class="block text-sm font-medium text-primary">Ícono:</label>
-       <app-icon-selector (selecionado)="menuForm.patchValue({icon: $event})"></app-icon-selector>
+       <app-icon-selector [selectedIcon]="menuForm.value.icon" (selecionado)="menuForm.patchValue({icon: $event})"></app-icon-selector>
       </div>
   
       <div>
@@ -24,15 +24,14 @@
             @for (sub of subMenus.controls;track $index) {
 
 
-              <div  [formGroupName]="$index" class="grid grid-cols-5 gap-4">
+              <div  [formGroupName]="$index" class="grid grid-cols-4 gap-4">
                 <input formControlName="name" type="text" placeholder="Nombre Submenú" class="p-2 border border-sub_base rounded-md" required>
                 <input formControlName="direction" type="text" placeholder="Dirección" class="p-2 border border-base rounded-md">
               
                 <!-- <input formControlName="icono" type="text" placeholder="Ícono" class="p-2 border border-gray-300 rounded-md" required> -->
-              <app-icon-selector (selecionado)="subMenus.controls[$index].patchValue({icon: $event})"></app-icon-selector>
+              <app-icon-selector [selectedIcon]="subMenus.controls[$index].value.icon" (selecionado)="subMenus.controls[$index].patchValue({icon: $event})"></app-icon-selector>
               
               <button type="button" (click)="removeSubMenu($index)" class="bg-red-500 text-white p-2 rounded-md">Eliminar</button>
-              <button type="button" (click)="removeSubMenu($index)" class="bg-secondary text-white p-2 rounded-md">Guardar</button>
             </div>
           }
         </div>

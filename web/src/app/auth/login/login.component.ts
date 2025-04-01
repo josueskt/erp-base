@@ -11,8 +11,8 @@ import { LoginService } from './login.service';
 export class LoginComponent {
   readonly loginS = inject(LoginService)
   userForm = new FormGroup({
-    user: new FormControl(''),
-    password: new FormControl('')
+    email: new FormControl(''),
+    pass: new FormControl('')
   });
   login(){
     if(this.userForm.value){

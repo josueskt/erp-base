@@ -1,96 +1,109 @@
-
-    
-  
-
-
 <div class="w-full bg-base sm:hidden">
 
-  <button #buton  type="button" class=" bg-base inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+  <button #buton type="button"
+    class=" bg-base inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
     <span class="sr-only">Open sidebar</span>
     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+      <path clip-rule="evenodd" fill-rule="evenodd"
+        d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+      </path>
     </svg>
- </button>
+  </button>
 </div>
- 
- <aside #menu id="default-sidebar" class="fixed text-primary top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-sub_base border-2 shadow-sub_base shadow-2xl" aria-label="Sidebar">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-base">
-       <ul class="space-y-2 font-medium">
-        @for (item of menu_des; track $index) {
-          @if(item.subMenu){
-            <li  class="border-b">
-              <button (click)="toggleSubMenu(item)" 
-                class="w-full text-left p-2 text-primary hover:bg-sub_base flex justify-start rounded-lg">
-                <i [ngClass]="item.icono"   class="me-2"></i>  {{ item.name }}
-                @if(item.subMenu.length){
-                  <span class="ml-auto" >{{ item.open ? '▲' : '▶' }}</span>
-                }
-              </button>
-        
-      
-              <ul [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !item.open, 'max-h-[1000px] opacity-100 scale-y-100': item.open }"
-                class="bg-tersiary transition-all duration-300 ease-in-out overflow-hidden origin-top">
-                
-                @for (sub of item.subMenu; track $index) {
-                  @if(sub.subMenu?.length){
-                  <li  class="">
-                    <button (click)="toggleSubMenu(sub)" 
-                      class="w-full text-left p-2 text-primary hover:bg-sub_base flex  rounded-lg">
-                      <i [ngClass]="sub.icono"   class="me-2"></i>  {{ sub.name }}
-                      <span class="ml-auto" *ngIf="sub.subMenu?.length">{{ sub.open ? '▼' : '▶' }}</span>
-                    </button>
-          
-                  
-                    <ul [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !sub.open, 'max-h-[500px] opacity-100 scale-y-100': sub.open }"
-                      class="bg-tersiary transition-all duration-300 ease-in-out overflow-hidden origin-top">
-                      @for (subsub of sub.subMenu; track $index) {
-                        
-                        <li  class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base">
-                          <a   [routerLink]='subsub.direcion' class="nav-link active">
-                            <i [ngClass]="subsub.icono"   class="me-2"></i>{{subsub.name}}
-                            </a>
-                        </li>
-                      }
-                    </ul>
-                  </li>
-                }@else {
-                  <li class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base ">
-                    <a   [routerLink]='sub.direcion' class="nav-link active">
-                    <i [ngClass]="sub.icono" [style.color]="item.color"  class="me-2"></i>{{sub.name}}
-                    </a>
-                  </li>
-                }
-                }
-             
-                
-              </ul>
-            </li>
-          }@else {
-            <li class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base ">
-              <a   [routerLink]='item.direcion' class="nav-link active">
-              <i [ngClass]="item.icono" [style.color]="item.color"  class="me-2"></i>{{item.name}}
-              </a>
-            </li>
+
+<aside #menu id="default-sidebar"
+  class="fixed text-primary top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 border-sub_base border-2 shadow-sub_base shadow-2xl"
+  aria-label="Sidebar">
+  <div class="h-full px-3 py-4 overflow-y-auto bg-base">
+    <ul class="space-y-2 font-medium">
+      @for (item of menu_des; track $index) {
+      @if(item.submenu.length > 0){
+      <li class="border-b">
+        <button (click)="toggleSubMenu(item)"
+          class="w-full text-left p-2 text-primary hover:bg-sub_base flex justify-start rounded-lg">
+          <i class="fa-solid text-primary border-secondary me-2" [ngClass]="item.icon"></i>
+          {{ item.name }}
+          @if(item.submenu.length){
+          <span class="ml-auto">{{ item.open ? '▲' : '▶' }}</span>
           }
-         
-        }
-          <li>
-            <div>
-              <app-button sty="w-full text-left p-2 text-primary hover:bg-sub_base flex  rounded-lg"  (buttonClicked)="open =!open " label="Ver temas  "></app-button>
-            </div>
-            <div [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !open, 'max-h-[1000px] opacity-100 scale-y-100': open }">
+        </button>
 
-              <app-button class="rounded-full" sty="bg-gray-800 rounded-full w-6 h-6 border border-primary"  label=""   (buttonClicked)="changeTheme('theme-dark')" />
-              <app-button label="" sty="bg-white rounded-full w-6 h-6 border border-primary" (buttonClicked)="changeTheme('theme-white')" />
-              <app-button label="" sty="bg-blue-700 rounded-full w-6 h-6 border border-primary" (buttonClicked)="changeTheme('theme-blue')" />
-              <app-button label="" sty="bg-purple-700 rounded-full w-6 h-6 border border-primary" (buttonClicked)="changeTheme('theme-purple')" />
-            </div>
+
+        <ul
+          [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !item.open, 'max-h-[1000px] opacity-100 scale-y-100': item.open }"
+          class="bg-tersiary transition-all duration-300 ease-in-out overflow-hidden origin-top">
+
+          @for (sub of item.submenu; track $index) {
+          @if(sub.submenu?.length > 0){
+          <li class="">
+            <button (click)="toggleSubMenu(sub)"
+              class="w-full text-left p-2 text-primary hover:bg-sub_base flex  rounded-lg">
+              <i class="fa-solid text-primary border-secondary me-2" [ngClass]="item.icon"></i>
+
+              <i class="fa-solid text-primary border-secondary me-2" [ngClass]="sub.icon"></i>
+              {{ sub.name }}
+              <span class="ml-auto" *ngIf="sub.subMenu?.length">{{ sub.open ? '▼' : '▶' }}</span>
+            </button>
+
+
+            <ul
+              [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !sub.open, 'max-h-[500px] opacity-100 scale-y-100': sub.open }"
+              class="bg-tersiary transition-all duration-300 ease-in-out overflow-hidden origin-top">
+              @for (subsub of sub.submenu; track $index) {
+
+              <li class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base">
+                <a [routerLink]='subsub.direction' class="nav-link active">
+                  <i class="fa-solid text-primary border-secondary me-2" [ngClass]="subsub.icon"></i>
+
+                  <i [ngClass]="subsub.icon" class="me-2"></i>{{subsub.name}}
+                </a>
+              </li>
+              }
+            </ul>
           </li>
-          <hr>
-       </ul>
-    </div>
- </aside>
- 
-  
+          }@else {
+          <li [routerLink]='sub.direction' class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base ">
+            <a  class="nav-link active">
+          <i class="fa-solid text-primary border-secondary me-2" [ngClass]="sub.icon"></i>
+              
+              {{sub.name}}
+            </a>
+          </li>
+          }
+          }
 
-  
+
+        </ul>
+      </li>
+      }@else {
+      <li [routerLink]='item.direction' class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base ">
+        <a  class="nav-link active">
+          <i class="fa-solid text-primary border-secondary me-2" [ngClass]="item.icon"></i>
+
+          {{item.name}}
+        </a>
+      </li>
+      }
+
+      }
+      <li>
+        <div>
+          <app-button sty="w-full text-left p-2 text-primary hover:bg-sub_base flex  rounded-lg"
+            (buttonClicked)="open =!open " label="Ver temas  "></app-button>
+        </div>
+        <div [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !open, 'max-h-[1000px] opacity-100 scale-y-100': open }">
+
+          <app-button class="rounded-full" sty="bg-gray-800 rounded-full w-6 h-6 border border-primary" label=""
+            (buttonClicked)="changeTheme('theme-dark')" />
+          <app-button label="" sty="bg-white rounded-full w-6 h-6 border border-primary"
+            (buttonClicked)="changeTheme('theme-white')" />
+          <app-button label="" sty="bg-blue-700 rounded-full w-6 h-6 border border-primary"
+            (buttonClicked)="changeTheme('theme-blue')" />
+          <app-button label="" sty="bg-purple-700 rounded-full w-6 h-6 border border-primary"
+            (buttonClicked)="changeTheme('theme-purple')" />
+        </div>
+      </li>
+      <hr>
+    </ul>
+  </div>
+</aside>

@@ -32,7 +32,8 @@ export const loggerInter: HttpInterceptorFn = (req, next) => {
         Swal.fire({
             position: "center",
             icon: "error",
-            title: "error "+error.status+' '+error.error.message,
+            title: ""+ error.error.message,
+            
             showConfirmButton: false,
             timer: 2000
           });

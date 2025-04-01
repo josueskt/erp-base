@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,8 +9,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './icon-selector.component.css'
 })
 export class IconSelectorComponent {
-  @Output() selecionado = new EventEmitter<string>()
-   selectedIcon: string = ''; // Ícono seleccionado
+   @Output() selecionado = new EventEmitter<string>()
+  
+   @Input() selectedIcon: string = ''; // Ícono seleccionado
   showDropdown: boolean = false; // Estado del dropdown
 
   icons = [
