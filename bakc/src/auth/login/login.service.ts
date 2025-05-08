@@ -3,8 +3,7 @@ import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { SqlService } from 'src/sql/sql/sql.service';
-import { hash } from 'crypto';
-import { async } from 'rxjs';
+
 import * as argon2 from "argon2";
 @Injectable()
 export class LoginService {
@@ -14,18 +13,19 @@ export class LoginService {
   constructor( private readonly  jwt:JwtService , private readonly sql:SqlService){}
   async login(createLoginDto: CreateLoginDto) {
        // throw new HttpException('Usuario no encontrado', HttpStatus.BAD_REQUEST)
-    const usr =  await this.sql.query('SELECT * FROM "user" where email = $1',[createLoginDto.email])
+    const usr =  await this.sql.query('SELECT * FROM "user"  where email = $1',[createLoginDto.email])
     if(!usr[0]){
         throw new HttpException('Usuario o contraseña incorrecta', HttpStatus.BAD_REQUEST)
     }
     const verificado:boolean =  await argon2.verify(usr[0].pass, createLoginDto.pass, { secret: this.secretKey });
-    if(!verificado){
+    if(verificado){
       throw new HttpException('Usuario o contraseña incorrecta', HttpStatus.BAD_REQUEST)
     } 
 
+
+
     const ruts = await this.sql.query(`
       WITH RECURSIVE menu_tree AS (
-    -- Obtener las rutas principales asignadas al perfil (fk_profile = 1)
     SELECT DISTINCT r.id_route, r.name, r.icon, r.direction, r.fk_route
     FROM routs r
     JOIN user_routes ur ON r.id_route = ur.fk_route

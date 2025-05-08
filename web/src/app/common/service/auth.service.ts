@@ -39,4 +39,7 @@ export class AuthService {
     localStorage.removeItem('token');
     
   }
+  setToken(token:any):void{
+    localStorage.setItem("token",token)
+  }
 }

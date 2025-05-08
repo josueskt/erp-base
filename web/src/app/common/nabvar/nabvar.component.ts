@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../service/auth.service';
 
@@ -13,6 +13,7 @@ import { AuthService } from '../service/auth.service';
 export class NabvarComponent implements OnInit {
   
   readonly auth = inject( AuthService)
+  readonly router = inject(Router)
   open= false
   menu_des: any[] = [
  
@@ -50,6 +51,13 @@ export class NabvarComponent implements OnInit {
 
    debug(route: string) {
     console.log('Intentando navegar a:', route);
+  }
+  async sign_down(){
+     await this.auth.clearToken()
+     this.router.navigate(['/login']).then(() => {
+    this.menu_des =  []
+    });
+    
   }
  
    @HostListener('document:click', ['$event'])

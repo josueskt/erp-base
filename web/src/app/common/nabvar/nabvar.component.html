@@ -103,6 +103,12 @@
             (buttonClicked)="changeTheme('theme-purple')" />
         </div>
       </li>
+      <li>
+        @if (menu_des.length >0) {
+
+          <app-button label="cerrar sescion" (buttonClicked)="sign_down()"></app-button>
+        }
+      </li>
       <hr>
     </ul>
   </div>

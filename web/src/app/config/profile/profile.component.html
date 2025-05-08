@@ -1,0 +1,108 @@
+<div class=" p-4 bg-base text-primary mb-2 text-right">configuracion/perfiles</div>
+<div class="container mx-auto p-4 bg-base text-primary ">
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div>
+      <label for="name">Nombre</label>
+      <input class="bg-primary rounded-md text-secondary" id="name" formControlName="name" type="text" />
+
+      <!-- Mensaje si el campo está vacío -->
+      @if(form.get('name')?.hasError('required') && form.get('name')?.touched){
+
+      nombre es requerido
+      }
+      @if(
+      form.get('name')?.hasError('maxlength') && form.get('name')?.touched
+      ){
+
+      nombre no debe tener más de 50 caracteres
+      }
+
+      @if (form.get('name')?.hasError('pattern') && form.get('name')?.touched) {
+
+      nombre no debe estar vacío
+      }
+
+    </div>
+    <button class="p-2 rounded text-base bg-secondary hover:filter hover:brightness-75 duration-75 ease-in"
+      type="submit" [disabled]="form.invalid">Guardar</button>
+  </form>
+</div>
+<div class="   text-primary rounded-lg mt-2 ">
+
+ 
+    
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left rtl:text-right text-primary border-base ">
+      <thead class="text-xs text-primary uppercase bg-base ">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                  Nombre
+              </th>
+              
+              <th scope="col" class="px-6 py-3">
+                  Editar
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+        @for (item of perfiles; track $index) {
+          <tr (click)="cambio_perfil(item.id_profile)" class="bg-base  cursor-pointer  border-secondary hover:bg-sub_base ">
+              <th scope="row" class="px-6 py-4 font-medium text-primary whitespace-nowrap ">
+                  {{item.name}}
+              </th>
+              <td class="px-6 py-4">
+                <app-button></app-button>
+              </td>
+              
+            </tr>
+          }
+         
+         
+      </tbody>
+  </table>
+</div>
+<div class="right-0 w-full bg-base text-right pr-3 p-2 rounded-lg mt-3">
+
+  <app-button label="Agregar usuario"></app-button>
+</div>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg pt-1">
+  <table class="w-full text-sm text-left rtl:text-right text-primary border-base ">
+      <thead class="text-xs text-primary uppercase bg-base ">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                  Usuario
+              </th>
+              
+              <th scope="col" class="px-6 py-3">
+                  agregar
+              </th>
+              <th scope="col" class="px-6 py-3">
+                eliminar
+            </th>
+          </tr>
+      </thead>
+      <tbody>
+        @for (item of perfiles; track $index) {
+          <tr  class="bg-base   border-secondary  ">
+              <th scope="row" class="px-6 py-4 font-medium text-primary whitespace-nowrap ">
+                  {{item.name}}
+              </th>
+              <td class="px-6 py-4">
+                <app-button></app-button>
+              </td>
+              <td class="px-6 py-4">
+                <app-button  sty="bg-red-500"></app-button>
+              </td>
+              
+            </tr>
+          }
+         
+         
+      </tbody>
+  </table>
+</div>
+
+  
+</div>

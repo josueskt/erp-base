@@ -3,8 +3,8 @@
 CAUTION: Do not modify this file unless you know what you are doing.
  Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="1.2.0-alpha1" use-changelog="false" max-obj-count="6"
-	 last-position="0,394" last-zoom="1.05"
+<dbmodel pgmodeler-ver="1.2.0-alpha1" use-changelog="false" max-obj-count="7"
+	 last-position="-42,337" last-zoom="1.05" scene-rect="-40,0,1610.8,1076.8"
 	 default-schema="public" default-owner="postgres"
 	 layers="Default layer"
 	 active-layers="0"
@@ -20,7 +20,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="routs" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="800" y="520"/>
+	<position x="1040" y="520"/>
 	<column name="id_route" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -41,10 +41,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="user" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+<table name="user" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
 	<schema name="public"/>
 	<role name="postgres"/>
-	<position x="160" y="500"/>
+	<position x="-20" y="400"/>
 	<column name="id_user" not-null="true">
 		<type name="serial" length="0"/>
 	</column>
@@ -64,9 +64,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<type name="boolean" length="0"/>
 		<comment> <![CDATA[estado para ver si el usuario esta activo y puede iniciar seccion ]]> </comment>
 	</column>
-	<column name="fk_profile">
-		<type name="integer" length="0"/>
-	</column>
 	<constraint name="user_pk" type="pk-constr" table="public.&quot;user&quot;">
 		<columns names="id_user" ref-type="src-columns"/>
 	</constraint>
@@ -76,7 +73,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<schema name="public"/>
 	<role name="postgres"/>
 	<comment> <![CDATA[tabla para ver las rutas  asignadas]]> </comment>
-	<position x="480" y="560"/>
+	<position x="640" y="500"/>
 	<column name="id_u_r" not-null="true">
 		<type name="serial" length="0"/>
 		<comment> <![CDATA[id del ususario - ruta]]> </comment>
@@ -131,16 +128,32 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
+<table name="user_profile" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment> <![CDATA[tabla realciona de mucho a muchos ]]> </comment>
+	<position x="360" y="560"/>
+	<column name="id_usr_pro" not-null="true">
+		<type name="serial" length="0"/>
+		<comment> <![CDATA[pk]]> </comment>
+	</column>
+	<column name="fk_user">
+		<type name="integer" length="0"/>
+		<comment> <![CDATA[llave f tabla user]]> </comment>
+	</column>
+	<column name="fk_profile">
+		<type name="integer" length="0"/>
+		<comment> <![CDATA[tabla profile]]> </comment>
+	</column>
+	<constraint name="user_profile_pk" type="pk-constr" table="public.user_profile">
+		<columns names="id_usr_pro" ref-type="src-columns"/>
+	</constraint>
+</table>
+
 <constraint name="subroute" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="CASCADE" del-action="CASCADE" ref-table="public.routs" table="public.routs">
 	<columns names="fk_route" ref-type="src-columns"/>
 	<columns names="id_route" ref-type="dst-columns"/>
-</constraint>
-
-<constraint name="u_p" type="fk-constr" comparison-type="MATCH SIMPLE"
-	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.profiles" table="public.&quot;user&quot;">
-	<columns names="fk_profile" ref-type="src-columns"/>
-	<columns names="id_profile" ref-type="dst-columns"/>
 </constraint>
 
 <constraint name="u_p" type="fk-constr" comparison-type="MATCH SIMPLE"
@@ -161,24 +174,31 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="id_branch" ref-type="dst-columns"/>
 </constraint>
 
+<constraint name="usr_prf_prof" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.profiles" table="public.user_profile">
+	<columns names="fk_profile" ref-type="src-columns"/>
+	<columns names="id_profile" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="u_up" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="CASCADE" ref-table="public.&quot;user&quot;" table="public.user_profile">
+	<columns names="fk_user" ref-type="src-columns"/>
+	<columns names="id_user" ref-type="dst-columns"/>
+</constraint>
+
 <relationship name="rel_routs_routs" type="relfk" layers="0"
 	 src-table="public.routs"
 	 dst-table="public.routs" reference-fk="subroute"
 	 src-required="false" dst-required="false">
 	<line>
-		<position x="1096.76" y="589.375"/>
-	<position x="1096.76" y="487"/>
-	<position x="975.843" y="487"/>
+		<position x="1336.76" y="589.375"/>
+	<position x="1336.76" y="487"/>
+	<position x="1215.84" y="487"/>
 	</line>
 </relationship>
 
 <relationship name="rel_user_routes_profiles" type="relfk" layers="0"
 	 src-table="public.user_routes"
-	 dst-table="public.profiles" reference-fk="u_p"
-	 src-required="false" dst-required="false"/>
-
-<relationship name="rel_user_profiles" type="relfk" layers="0"
-	 src-table="public.&quot;user&quot;"
 	 dst-table="public.profiles" reference-fk="u_p"
 	 src-required="false" dst-required="false"/>
 
@@ -190,6 +210,16 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <relationship name="rel_profiles_branch" type="relfk" layers="0"
 	 src-table="public.profiles"
 	 dst-table="public.branch" reference-fk="profile_branch"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_user_profile_profiles" type="relfk" layers="0"
+	 src-table="public.user_profile"
+	 dst-table="public.profiles" reference-fk="usr_prf_prof"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_user_profile_user" type="relfk" layers="0"
+	 src-table="public.user_profile"
+	 dst-table="public.&quot;user&quot;" reference-fk="u_up"
 	 src-required="false" dst-required="false"/>
 
 </dbmodel>

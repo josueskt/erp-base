@@ -1,0 +1,30 @@
+import { Injectable } from '@nestjs/common';
+import { CreateProfileDto } from './dto/create-profile.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { SqlService } from 'src/sql/sql/sql.service';
+
+@Injectable()
+export class ProfileService {
+  constructor(readonly slqS:SqlService){}
+  async create(createProfileDto: CreateProfileDto) {
+    await this.slqS.query('insert into profiles(name) values($1)',[createProfileDto.name])
+     
+  }
+
+  async findAll() {
+return await this.slqS.query('select * from profiles')
+  }
+
+  async findOne(id: number) {
+return await this.slqS.query('select u.name , email from profiles p left join user_profile up on p.id_profile = up.fk_profile')
+
+  }
+
+  update(id: number, updateProfileDto: UpdateProfileDto) {
+    return `This action updates a #${id} profile`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} profile`;
+  }
+}
