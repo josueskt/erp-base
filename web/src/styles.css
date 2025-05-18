@@ -5,6 +5,10 @@
   --color-base: var(--color-base);
   --color-secondary: var(--color-secondary);
   --color-sub_base: var(--color-sub_base);
+  --color-success:var( --color-success); 
+  --color-delete: var( --color-delete);
+  --color-info: var(--color-info);
+  --color-close: var(--color-close);
 }
 /* Para navegadores basados en WebKit (Chrome, Edge, Safari) */
 ::-webkit-scrollbar {
@@ -27,36 +31,66 @@
 
 
 :root {
-  --color-base: #000000; 
-  --color-sub_base: #000000; 
-  --color-primary: #ffffff;  
-  --color-secondary: #546865;  
+  --color-base: #000000;
+  --color-sub_base: #000000;
+  --color-primary: #ffffff;
+  --color-secondary: #546865;
+  
+  /* Colores de estado base */
+  --color-success: #28a745;
+  --color-delete: #dc3545;
+  --color-info: #17a2b8;
+  --color-close: #6c757d;
 }
 
 .theme-dark {
-  --color-base: #222831; 
-  --color-sub_base: #31363F; 
-  --color-primary: #ffffff;  
-  --color-secondary: #546865;  
+  --color-base: #222831;
+  --color-sub_base: #31363F;
+  --color-primary: #ffffff;
+  --color-secondary: #546865;
+  
+  /* Colores que contrastan con fondos oscuros */
+  --color-success: #4CAF50; /* Verde más brillante */
+  --color-delete: #F44336; /* Rojo vibrante */
+  --color-info: #2196F3; /* Azul claro */
+  --color-close: #9E9E9E; /* Gris medio */
 }
 
 .theme-white {
-  --color-base: #ffffff; 
-  --color-sub_base: #e3e3e3; 
-  --color-primary: #31363F;  
-  --color-secondary: #546865;  
+  --color-base: #ffffff;
+  --color-sub_base: #e3e3e3;
+  --color-primary: #31363F;
+  --color-secondary: #546865;
+  
+  /* Colores más suaves para fondo blanco */
+  --color-success: #2E7D32; /* Verde oscuro */
+  --color-delete: #C62828; /* Rojo oscuro */
+  --color-info: #1565C0; /* Azul oscuro */
+  --color-close: #424242; /* Gris oscuro */
 }
 
 .theme-blue {
-  --color-base: #4F959D; 
-  --color-sub_base: #F6F8D5; 
-  --color-primary: #0e2334;  
-  --color-secondary: #000000;  
-}
-.theme-purple {
-  --color-base: #2c1c28; 
-  --color-sub_base: #543850; 
-  --color-primary: #ffffff;  
-  --color-secondary: #ff00e6;  
+  --color-base: #4F959D;
+  --color-sub_base: #F6F8D5;
+  --color-primary: #0e2334;
+  --color-secondary: #000000;
+  
+  /* Colores que complementan la paleta azul/verde */
+  --color-success: #2cd434; /* Verde marino */
+  --color-delete: #B22222; /* Rojo fuego */
+  --color-info: #1E90FF; /* Azul dodger */
+  --color-close: #696969; /* Gris dim */
 }
 
+.theme-purple {
+  --color-base: #2c1c28;
+  --color-sub_base: #543850;
+  --color-primary: #ffffff;
+  --color-secondary: #ff00e6;
+  
+  /* Colores que combinan con morado/neón */
+  --color-success: #9C27B0; /* Morado éxito */
+  --color-delete: #FF4081; /* Rosa fuerte */
+  --color-info: #00BCD4; /* Cyan */
+  --color-close: #7B1FA2; /* Morado oscuro */
+}

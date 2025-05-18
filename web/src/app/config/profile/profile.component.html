@@ -48,7 +48,7 @@
       </thead>
       <tbody>
         @for (item of perfiles; track $index) {
-          <tr (click)="cambio_perfil(item.id_profile)" class="bg-base  cursor-pointer  border-secondary hover:bg-sub_base ">
+          <tr (click)="cambio_perfil(item.id_profile)" [ngClass]="{'bg-secondary!': item.id_profile ==perfil_selected}" class="bg-base  cursor-pointer  border-secondary hover:bg-sub_base ">
               <th scope="row" class="px-6 py-4 font-medium text-primary whitespace-nowrap ">
                   {{item.name}}
               </th>
@@ -106,3 +106,13 @@
 
   
 </div>
+<app-button label="open" (buttonClicked)="Open()"></app-button>
+<app-dimamicform
+ [(close_open)]="open"
+  [formGroup]="myForm"
+  
+[fields]="formFields"
+(formSubmit)="onSubmit($event)"
+(formChange)="onFormChange($event)">
+</app-dimamicform>
+

@@ -18,7 +18,7 @@ export class LoginService {
         throw new HttpException('Usuario o contraseña incorrecta', HttpStatus.BAD_REQUEST)
     }
     const verificado:boolean =  await argon2.verify(usr[0].pass, createLoginDto.pass, { secret: this.secretKey });
-    if(verificado){
+    if(!verificado){
       throw new HttpException('Usuario o contraseña incorrecta', HttpStatus.BAD_REQUEST)
     } 
 
