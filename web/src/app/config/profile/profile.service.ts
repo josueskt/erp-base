@@ -21,6 +21,10 @@ export class ProfileService {
     return this.http.get<any>(this.base)
 
   }
+  asignamentProfileRouts(data:{ida:string,Routs:[]}){
+    return this.http.post(this.base+"/routs",{...data})
+
+  }
   get_allRouts(){
     return this.http.get<any>(this.base+"/routs")
 
@@ -31,6 +35,10 @@ export class ProfileService {
   }
   get_RoutsInNotProfile(id:string){
     return this.http.get<any>(this.base2+'allroutesinnotprofile'+"/"+id)
+
+  }
+  deleteRoute(id:string){
+    return this.http.delete<any>(this.base2+''+id)
 
   }
   

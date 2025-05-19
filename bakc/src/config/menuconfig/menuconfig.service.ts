@@ -80,7 +80,9 @@ WHERE mt.fk_route IS NULL;
     return `This action updates a #${id} menuconfig`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} menuconfig`;
+ async remove(id: number) {
+  
+    await this.sql.query('delete from routs where id_route = $1',[id])
+    return  { "message": "ruta eliminada" };
   }
 }

@@ -4,10 +4,12 @@ import { FormGroup, FormBuilder, Validators, FormArray, ReactiveFormsModule } fr
 import { ButtonComponent } from '../../common/button/button.component';
 import { IconSelectorComponent } from "../../common/icon-selector/icon-selector.component";
 import { MenuconfigService } from './menuconfig.service';
+import Swal from 'sweetalert2';
+import { BreadcrumbComponent } from "../../common/breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-menuconfig',
-  imports: [ReactiveFormsModule, ButtonComponent, IconSelectorComponent],
+  imports: [ReactiveFormsModule, ButtonComponent, IconSelectorComponent, BreadcrumbComponent],
   templateUrl: './menuconfig.component.html',
   styleUrl: './menuconfig.component.css'
 })
@@ -85,12 +87,14 @@ export class MenuconfigComponent {
         icon: [sub.icon]
       }));
     });
-    console.log(menuToEdit)
   }
 
   // Método para eliminar un menú
   deleteMenu(index: number) {
-    this.menus.splice(index, 1);
+    this.menuConfigS.deleteRoute(index).subscribe(((e:any)=>{
+      Swal.fire({icon:"success",title:e.message})
+    }))
+    
   }
 
   toggleAccordion(index: number) {

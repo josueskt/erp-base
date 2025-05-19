@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ProfileService } from './profile.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
+import { AsignamentProfileDto } from './dto/asignamentRouteProfile.dto';
 
 @Controller('config/profile')
 export class ProfileController {
@@ -10,6 +11,10 @@ export class ProfileController {
   @Post()
   create(@Body() createProfileDto: CreateProfileDto) {
     return this.profileService.create(createProfileDto);
+  }
+  @Post('/routs')
+ asignametRouteToProfile(@Body() asignament: AsignamentProfileDto) {
+    return this.profileService.asignamentRouteProfile(asignament);
   }
 
   @Get()

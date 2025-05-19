@@ -19,4 +19,8 @@ export class MenuconfigService {
     return this.http.get(this.base)
 
   }
+  deleteRoute(id:number){
+    return this.http.delete(this.base+"/"+id)
+
+  }
 }

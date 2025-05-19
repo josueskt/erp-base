@@ -1,6 +1,6 @@
-<div class="container mx-auto p-4 bg-sub_base ">
+<app-breadcrumb [routs]="[{name:'configuracion'},{name:'menu'}]"></app-breadcrumb>
+<div class="container mx-auto  bg-sub_base ">
 
-  <h2 class="text-primary text-3xl font-semibold mb-6">Gestión de Menús</h2>
 
   <form [formGroup]="menuForm" (ngSubmit)="addMenu()" class="grid grid-cols-1 gap-6 bg-base text-primary p-6 rounded-lg shadow-md">
     <div>
@@ -51,7 +51,7 @@
           <span class="text-primary font-semibold pr-2">{{ item.name }}</span>
           <div>
             <button (click)="editMenu(i)" class="bg-yellow-500 text-primary px-4 py-2 rounded-md">Editar</button>
-            <button (click)="deleteMenu(i)" class="bg-red-500 text-primary px-4 py-2 rounded-md ml-2">Eliminar</button>
+            <button (click)="deleteMenu(item.id_route)" class="bg-red-500 text-primary px-4 py-2 rounded-md ml-2">Eliminar</button>
             <i class="px-4 py-3 ml-2 bg-primary rounded-md"  [class]="item.open ?   'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
           </div>
         </button>
@@ -61,7 +61,7 @@
               <ul class="mt-4 space-y-2">
                 @for (sub of item.submenu; track sub) {
                   <li class="pl-6">
-                    <span class="text-primary">-{{ sub.name }}  <i [class]="sub.icon"></i></span>
+                    <span class="text-primary"> > {{ sub.name }}  <i [class]="sub.icon"></i></span>
                   </li>
                 }
               </ul>

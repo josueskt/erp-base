@@ -66,7 +66,7 @@ export class DimamicformComponent implements OnInit, OnChanges {
   close() {
     this.close_openChange.emit(false);
    this.formGroup.reset()
-   this.fields = []
+   
   }
 
 

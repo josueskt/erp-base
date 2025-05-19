@@ -27,7 +27,7 @@ export class ProfileComponent {
   formFields:DynamicField[] = [
       
     {
-      name: 'Rutas',
+      name: 'Routs',
       label: 'Agregar Ruta',
       type: 'multiselect',
       options: [
@@ -44,9 +44,36 @@ export class ProfileComponent {
   constructor(private fba: FormBuilder) {
        this.myForm = this.fba.group({
          ida: ['',[] ],
-        Rutas: [[]]
+        Routs: [[]]
        });
      }
+
+
+     deleteRoute(id:string){
+      Swal.fire({
+        title: "Seguro que desea eliminar?",
+        text: "dejara de aperecer en el menu!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "si eliminar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          this.profileS.deleteRoute(id).subscribe((e)=>{
+
+            Swal.fire({
+              title: "Eliminado!",
+              text: "la ruta ha sido aliminada del perfil.",
+              icon: "success"
+            });
+          })
+          
+        }
+      });
+     }
+
   Open(){
     if(!this.perfil_selected){
       Swal.fire({title:'selecione un perfil',showCloseButton:false})
@@ -73,8 +100,12 @@ nuevaRuta(){
 onFormChange($event: any) {
 throw new Error('Method not implemented.');
 }
+// boton de agregar nueva ruta
 onSubmit(data:any) {
-  alert(data)
+  this.profileS.asignamentProfileRouts(data).subscribe((e:any)=>{
+    Swal.fire({ icon:'success',title:e.message})
+    this.cambio_perfil(this.perfil_selected)
+  })
 
 }
  
@@ -105,7 +136,9 @@ ngOnInit(): void {
 
 
   submit(){
-    alert(this.form.value)
+    this.profileS.createProfile(this.form.value).subscribe((e:any)=>{
+Swal.fire({icon:"success",title:e.message})
+    })
   }
 
   cambio_perfil(id:string){
@@ -115,7 +148,6 @@ ngOnInit(): void {
     this.profileS.get_RoutsByProfile(this.perfil_selected).subscribe((e:any)=>{
       this.profile_Routs = e
     })  
-    console.log(this.perfil_selected)
   }
 
 
