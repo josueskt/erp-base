@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { MenuconfigService } from './menuconfig.service';
 import { CreateMenuconfigDto } from './dto/create-menuconfig.dto';
 import { UpdateMenuconfigDto } from './dto/update-menuconfig.dto';
@@ -18,9 +18,15 @@ export class MenuconfigController {
     return this.menuconfigService.findAll();
   }
 
-  @Get(':id')
+  @Get('allroutes/:id')
   findOne(@Param('id') id: string) {
-    return this.menuconfigService.findOne(+id);
+   
+    return this.menuconfigService.findOne(id);
+  }
+  @Get('allroutesinnotprofile/:id')
+  findAllRoutesNotInProfile(@Param('id') id: string, @Query('buscar')srq:string) {
+   
+    return this.menuconfigService.findAllRoutesIsnotprofile(id,srq);
   }
 
   @Patch(':id')

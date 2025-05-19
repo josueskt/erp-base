@@ -20,6 +20,10 @@ return await this.slqS.query('select u.name , email from profiles p left join us
 
   }
 
+   async find_routs(){
+    return await this.slqS.query('select * from  routs')
+   }
+
   update(id: number, updateProfileDto: UpdateProfileDto) {
     return `This action updates a #${id} profile`;
   }

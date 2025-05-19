@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../common/button/button.component';
@@ -7,7 +7,7 @@ import { MenuconfigService } from './menuconfig.service';
 
 @Component({
   selector: 'app-menuconfig',
-  imports: [ReactiveFormsModule, CommonModule, ButtonComponent, IconSelectorComponent],
+  imports: [ReactiveFormsModule, ButtonComponent, IconSelectorComponent],
   templateUrl: './menuconfig.component.html',
   styleUrl: './menuconfig.component.css'
 })

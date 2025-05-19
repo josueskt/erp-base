@@ -17,9 +17,13 @@ export class ProfileController {
     return this.profileService.findAll();
   }
 
-  @Get('config/profile/users/:id')
+  @Get('/users/:id')
   findOne(@Param('id') id: string) {
     return this.profileService.findOne(+id);
+  }
+  @Get('/routs')
+  findAllRouts(){
+    return this.profileService.find_routs()
   }
 
   @Patch(':id')

@@ -1,23 +1,30 @@
 <div class="relative w-full">
-    <!-- Input que muestra el icono seleccionado -->
-    <div class="flex items-center justify-between p-2 border rounded cursor-pointer border-primary" (click)="toggleDropdown()">
-      <div class="flex items-center gap-2 rounded-s-sm ">
-        <i *ngIf="selectedIcon" class="fa-solid text-xl text-primary" [ngClass]="selectedIcon"></i>
-        <span *ngIf="!selectedIcon" class="text-primary">Selecciona un ícono</span>
-      </div>
-      <i class="fa-solid fa-chevron-down text-primary"></i>
+  <!-- Input que muestra el icono seleccionado -->
+  <div class="flex items-center justify-between p-2 border rounded cursor-pointer border-primary" (click)="toggleDropdown()">
+    <div class="flex items-center gap-2 rounded-s-sm ">
+      @if (selectedIcon) {
+        <i class="fa-solid text-xl text-primary" [ngClass]="selectedIcon"></i>
+      }
+      @if (!selectedIcon) {
+        <span class="text-primary">Selecciona un ícono</span>
+      }
     </div>
-  
-    <!-- Dropdown con los iconos -->
-    <div *ngIf="showDropdown" class="absolute left-0 mt-2 w-full sm:w-96 bg-sub_base border rounded shadow-lg z-50">
-      <div class="grid grid-cols-3  p-1 max-h-60 overflow-y-auto  scrollbar scrollbar-thumb-primary">
-        <div *ngFor="let icon of icons" 
-             class="p-2 text-2xl border rounded-lg cursor-pointer transition-all duration-300 hover:bg-secondary bg-base m-1"
-             [class.bg-sub_base]="selectedIcon === icon"
-             (click)="selectIcon(icon)">
-          <i class="fa-solid text-primary border-secondary" [ngClass]="icon"></i>
-        </div>
-      </div>
-    </div>
+    <i class="fa-solid fa-chevron-down text-primary"></i>
   </div>
-  
+
+  <!-- Dropdown con los iconos -->
+  @if (showDropdown) {
+    <div class="absolute left-0 mt-2 w-full sm:w-96 bg-sub_base border rounded shadow-lg z-50">
+      <div class="grid grid-cols-3  p-1 max-h-60 overflow-y-auto  scrollbar scrollbar-thumb-primary">
+        @for (icon of icons; track icon) {
+          <div
+            class="p-2 text-2xl border rounded-lg cursor-pointer transition-all duration-300 hover:bg-secondary bg-base m-1"
+            [class.bg-sub_base]="selectedIcon === icon"
+            (click)="selectIcon(icon)">
+            <i class="fa-solid text-primary border-secondary" [ngClass]="icon"></i>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

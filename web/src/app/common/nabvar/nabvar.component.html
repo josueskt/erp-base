@@ -17,79 +17,81 @@
   <div class="h-full px-3 py-4 overflow-y-auto bg-base">
     <ul class="space-y-2 font-medium">
       @for (item of menu_des; track $index) {
-      @if(item.submenu.length > 0){
-      <li class="border-b">
-        <button (click)="toggleSubMenu(item)"
-          class="w-full text-left p-2 text-primary hover:bg-sub_base flex justify-start rounded-lg">
-          <i class="fa-solid text-primary border-secondary me-2" [ngClass]="item.icon"></i>
-          {{ item.name }}
-          @if(item.submenu.length){
-          <span class="ml-auto">{{ item.open ? '▲' : '▶' }}</span>
-          }
-        </button>
-
-
-        <ul
-          [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !item.open, 'max-h-[1000px] opacity-100 scale-y-100': item.open }"
-          class="bg-tersiary transition-all duration-300 ease-in-out overflow-hidden origin-top">
-
-          @for (sub of item.submenu; track $index) {
-          @if(sub.submenu?.length > 0){
-          <li class="">
-            <button (click)="toggleSubMenu(sub)"
-              class="w-full text-left p-2 text-primary hover:bg-sub_base flex  rounded-lg">
+        @if(item.submenu.length > 0){
+          <li class="border-b">
+            <button (click)="toggleSubMenu(item)"
+              class="w-full text-left p-2 text-primary hover:bg-sub_base flex justify-start rounded-lg">
               <i class="fa-solid text-primary border-secondary me-2" [ngClass]="item.icon"></i>
-
-              <i class="fa-solid text-primary border-secondary me-2" [ngClass]="sub.icon"></i>
-              {{ sub.name }}
-              <span class="ml-auto" *ngIf="sub.subMenu?.length">{{ sub.open ? '▼' : '▶' }}</span>
+              {{ item.name }}
+              @if(item.submenu.length){
+                <span class="ml-auto">{{ item.open ? '▲' : '▶' }}</span>
+              }
             </button>
 
 
             <ul
-              [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !sub.open, 'max-h-[500px] opacity-100 scale-y-100': sub.open }"
+              [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !item.open, 'max-h-[1000px] opacity-100 scale-y-100': item.open }"
               class="bg-tersiary transition-all duration-300 ease-in-out overflow-hidden origin-top">
-              @for (subsub of sub.submenu; track $index) {
 
-              <li class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base">
-                <a [routerLink]='subsub.direction' class="nav-link active">
-                  <i class="fa-solid text-primary border-secondary me-2" [ngClass]="subsub.icon"></i>
+              @for (sub of item.submenu; track $index) {
+                @if(sub.submenu?.length > 0){
+                  <li class="">
+                    <button (click)="toggleSubMenu(sub)"
+                      class="w-full text-left p-2 text-primary hover:bg-sub_base flex  rounded-lg">
+                      <i class="fa-solid text-primary border-secondary me-2" [ngClass]="item.icon"></i>
 
-                  <i [ngClass]="subsub.icon" class="me-2"></i>{{subsub.name}}
-                </a>
-              </li>
+                      <i class="fa-solid text-primary border-secondary me-2" [ngClass]="sub.icon"></i>
+                      {{ sub.name }}
+                      @if (sub.subMenu?.length) {
+                        <span class="ml-auto">{{ sub.open ? '▼' : '▶' }}</span>
+                      }
+                    </button>
+
+
+                    <ul
+                      [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !sub.open, 'max-h-[500px] opacity-100 scale-y-100': sub.open }"
+                      class="bg-tersiary transition-all duration-300 ease-in-out overflow-hidden origin-top">
+                      @for (subsub of sub.submenu; track $index) {
+
+                        <li class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base">
+                          <a [routerLink]='subsub.direction' class="nav-link active">
+                            <i class="fa-solid text-primary border-secondary me-2" [ngClass]="subsub.icon"></i>
+
+                            <i [ngClass]="subsub.icon" class="me-2"></i>{{subsub.name}}
+                          </a>
+                        </li>
+                      }
+                    </ul>
+                  </li>
+                  }@else {
+                  <li [routerLink]='sub.direction' class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base ">
+                    <a  class="nav-link active">
+                      <i class="fa-solid text-primary border-secondary me-2" [ngClass]="sub.icon"></i>
+
+                      {{sub.name}}
+                    </a>
+                  </li>
+                }
               }
+
+
             </ul>
           </li>
           }@else {
-          <li [routerLink]='sub.direction' class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base ">
+          <li [routerLink]='item.direction' class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base ">
             <a  class="nav-link active">
-          <i class="fa-solid text-primary border-secondary me-2" [ngClass]="sub.icon"></i>
-              
-              {{sub.name}}
+              <i class="fa-solid text-primary border-secondary me-2" [ngClass]="item.icon"></i>
+
+              {{item.name}}
             </a>
           </li>
-          }
-          }
-
-
-        </ul>
-      </li>
-      }@else {
-      <li [routerLink]='item.direction' class="flex items-center p-2 text-primary rounded-lg  hover:bg-sub_base ">
-        <a  class="nav-link active">
-          <i class="fa-solid text-primary border-secondary me-2" [ngClass]="item.icon"></i>
-
-          {{item.name}}
-        </a>
-      </li>
-      }
+        }
 
       }
       <li>
         <div>
           <app-button sty="w-full text-left p-2 text-primary hover:bg-sub_base flex  rounded-lg"
-            (buttonClicked)="open =!open " label="Ver temas  "></app-button>
+          (buttonClicked)="open =!open " label="Ver temas  "></app-button>
         </div>
         <div [ngClass]="{ 'max-h-0 opacity-0 scale-y-0': !open, 'max-h-[1000px] opacity-100 scale-y-100': open }">
 
@@ -110,6 +112,6 @@
         }
       </li>
       <hr>
-    </ul>
-  </div>
-</aside>
+      </ul>
+    </div>
+  </aside>

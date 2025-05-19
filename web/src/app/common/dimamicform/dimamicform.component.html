@@ -1,115 +1,186 @@
+<div class="relative z-10" [ngClass]="{'hidden': !close_open}" aria-labelledby="modal-title">
+  <div class="fixed inset-0 bg-gray-500/75 transition-opacity"></div>
 
-
-<div class="relative z-10 " [ngClass]="{'hidden': !close_open  }" aria-labelledby="modal-title" >
-  
-    
-    <div class="fixed inset-0 bg-gray-500/75 transition-opacity " ></div>
-  
-    <div class="fixed inset-0 z-10  overflow-y-auto">
-      <div class="flex min-h-full items-end justify-center  text-center sm:items-center sm:p-0">
-     
-        <div class="relative transform overflow-hidden rounded-lg min-h-screen sm:ml-64 w-lg bg-base text-left shadow-xl transition-all p-6">
-            <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="text-primary space-y-5 w-full mx-auto">
-              <div *ngFor="let field of fields" class="form-field">
-                <!-- Text/Number/Textarea fields -->
-                 @if(field.type === 'text' || field.type === 'number' || field.type === 'textarea'){
-
-                   <div class="space-y-2">
-                     <label [for]="field.name" class="block text-sm font-medium text-secondary">{{ field.label }}</label>
-                     
-                     <input *ngIf="field.type !== 'textarea'"
-                            class="w-full px-3 py-2 border border-subbase rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-                            [id]="field.name" 
-                            [type]="field.type" 
-                            [formControlName]="field.name"
-                            [placeholder]="field.placeholder || ''"
-                            [disabled]="field.disabled!">
-                            
-                     <textarea *ngIf="field.type === 'textarea'"
-                               class="w-full px-3 py-2 border border-subbase rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary min-h-[100px]"
-                               [id]="field.name"
-                               [formControlName]="field.name"
-                               [placeholder]="field.placeholder || ''"
-                               [disabled]="field.disabled!"></textarea>
-                               @if(isFieldInvalid(field.name)){
-                                <div  class="p-3 rounded-md bg-delete/10 border border-delete text-delete text-sm">
-                                  @if(hasError(field.name, 'required')){
-
-                                    <div >Este campo es requerido</div>
-                                  }
-                                  @if(hasError(field.name, 'minlength')){
-                                
-                                    <div >
-                                      Mínimo {{ getControl(field.name).errors?.['minlength']?.requiredLength }} caracteres
-                                    </div>
-                                  }
-                                  @if (hasError(field.name, 'email')) {
-
-                                    <div >Ingrese un email válido</div>
-                                  }
-                                  @if (hasError(field.name, 'min')) {
-
-                                    <div >
-                                      El valor mínimo es {{ getControl(field.name).errors?.['min']?.min }}
-                                    </div>
-                                  }
-                                </div>
-                               }
-                          
-                              
-                    
-                   </div>
-                 }
-                
-                @if(field.type === 'boolean'){
-
-                  <div  class="checkbox-field flex items-start">
-                    <div class="flex items-center h-5">
-                      <input type="checkbox" 
-                             class="h-4 w-4 text-primary border-subbase rounded focus:ring-primary"
-                             [formControlName]="field.name"
-                             [disabled]="field.disabled!">
-                    </div>
-                    <label class="ml-2 block text-sm text-secondary">{{ field.label }}</label>
-                    <div *ngIf="isFieldInvalid(field.name)" class="ml-3 text-sm text-delete">
-                      <div *ngIf="hasError(field.name, 'required')">Debe aceptar los términos</div>
-                    </div>
-                  </div>
-                }
-                @if(field.type === 'select'){
-                  <div  class="space-y-2">
-                    <label [for]="field.name" class="block text-sm font-medium text-secondary">{{ field.label }}</label>
-                    <select class="w-full px-3 py-2 border border-subbase rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary bg-base"
-                            [id]="field.name" 
-                            [formControlName]="field.name"
-                            [disabled]="field.disabled!">
-                      <option *ngIf="field.placeholder" value="">{{ field.placeholder }}</option>
-                      <option *ngFor="let option of field.options" [value]="option.value">
-                        {{ option.label }}
-                      </option>
-                    </select>
-                    <div *ngIf="isFieldInvalid(field.name)" class="p-3 rounded-md bg-delete/10 border border-delete text-delete text-sm">
-                      <div *ngIf="hasError(field.name, 'required')">Este campo es requerido</div>
-                    </div>
-                  </div>
-                }
-                
-              </div>
+  <div class="fixed inset-0 z-10 overflow-y-auto">
+    <div class="flex min-h-full items-end justify-center text-center sm:items-center sm:p-0">
+      <div class="relative transform overflow-hidden rounded-lg min-h-screen sm:ml-64 w-lg bg-base text-left shadow-xl transition-all p-6">
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="text-primary space-y-5 w-full mx-auto">
+          
+          @for (field of fields; track field) {
+            <div class="form-field">
               
-              <div class="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-                <button class="px-4 py-2 bg-success text-primary rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50" 
-                        type="submit" 
-                        [disabled]="!formGroup.valid">
-                  Enviar
-                </button>
-                <button (click)="close()" class="px-4 py-2 bg-close text-primary rounded-md hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 disabled:opacity-50" 
-                        type="button">
-                  Cancelar
-                </button>
-              </div>
-            </form>
+              @if(field.type === 'text' || field.type === 'number'){
+                <div class="space-y-2">
+                  <label [for]="field.name" class="block text-sm font-medium text-secondary">{{ field.label }}</label>
+                  <input
+                    class="w-full px-3 py-2 border border-subbase rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+                    [id]="field.name"
+                    [type]="field.type"
+                    [formControlName]="field.name"
+                    [placeholder]="field.placeholder || ''"
+                    [disabled]="field.disabled!">
+                  
+                  <!-- Mensajes de error -->
+                  @if(isFieldInvalid(field.name)){
+                    <div class="p-3 rounded-md bg-delete/10 border border-delete text-delete text-sm">
+                      @if(hasError(field.name, 'required')){
+                        <div>Este campo es requerido</div>
+                      }
+                      @if(hasError(field.name, 'minlength')){
+                        <div>Mínimo {{ getControl(field.name).errors?.['minlength']?.requiredLength }} caracteres</div>
+                      }
+                      @if(hasError(field.name, 'email')){
+                        <div>Ingrese un email válido</div>
+                      }
+                      @if(hasError(field.name, 'min')){
+                        <div>El valor mínimo es {{ getControl(field.name).errors?.['min']?.min }}</div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+              
+              <!-- Campo textarea -->
+              @if(field.type === 'textarea'){
+                <div class="space-y-2">
+                  <label [for]="field.name" class="block text-sm font-medium text-secondary">{{ field.label }}</label>
+                  <textarea
+                    class="w-full px-3 py-2 border border-subbase rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary min-h-[100px]"
+                    [id]="field.name"
+                    [formControlName]="field.name"
+                    [placeholder]="field.placeholder || ''"
+                    [disabled]="field.disabled!"></textarea>
+                  
+                  <!-- Mensajes de error -->
+                  @if(isFieldInvalid(field.name)){
+                    <div class="p-3 rounded-md bg-delete/10 border border-delete text-delete text-sm">
+                      @if(hasError(field.name, 'required')){
+                        <div>Este campo es requerido</div>
+                      }
+                      @if(hasError(field.name, 'minlength')){
+                        <div>Mínimo {{ getControl(field.name).errors?.['minlength']?.requiredLength }} caracteres</div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+              
+              <!-- Campo checkbox booleano -->
+              @if(field.type === 'boolean'){
+                <div class="checkbox-field flex items-start">
+                  <div class="flex items-center h-5">
+                    <input type="checkbox"
+                      class="h-4 w-4 text-primary border-subbase rounded focus:ring-primary"
+                      [formControlName]="field.name"
+                      [disabled]="field.disabled!">
+                  </div>
+                  <label class="ml-2 block text-sm text-secondary">{{ field.label }}</label>
+                  
+                  <!-- Mensajes de error -->
+                  @if (isFieldInvalid(field.name)) {
+                    <div class="ml-3 text-sm text-delete">
+                      @if (hasError(field.name, 'required')) {
+                        <div>Debe aceptar los términos</div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+              
+              <!-- Select simple -->
+              @if(field.type === 'select'){
+                <div class="space-y-2">
+                  <label [for]="field.name" class="block text-sm font-medium text-secondary">{{ field.label }}</label>
+                  <select class="w-full px-3 py-2 border border-subbase rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary bg-base"
+                    [id]="field.name"
+                    [formControlName]="field.name"
+                    [disabled]="field.disabled!">
+                    @if (field.placeholder) {
+                      <option value="">{{ field.placeholder }}</option>
+                    }
+                    @for (option of field.options; track option) {
+                      <option [value]="option.value">{{ option.label }}</option>
+                    }
+                  </select>
+                  
+                  <!-- Mensajes de error -->
+                  @if (isFieldInvalid(field.name)) {
+                    <div class="p-3 rounded-md bg-delete/10 border border-delete text-delete text-sm">
+                      @if (hasError(field.name, 'required')) {
+                        <div>Este campo es requerido</div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+              
+              <!-- Multiselect con checkboxes -->
+              @if(field.type === 'multiselect'){
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-secondary">{{ field.label }}</label>
+                  
+                  <!-- Contenedor de opciones -->
+                  <div class="border border-subbase rounded-md p-2 space-y-2 max-h-60 overflow-y-auto">
+                    @for (option of field.options; track option.value) {
+                      <div class="flex items-center p-2 hover:bg-gray-50/10 rounded">
+                        <input type="checkbox"
+                          [id]="field.name + '_' + option.value"
+                          [checked]="isOptionSelected(field.name, option.value)"
+                          (change)="toggleSelection(field.name, option.value)"
+                          class="h-4 w-4 text-primary border-subbase rounded focus:ring-primary"
+                          [disabled]="field.disabled!">
+                        <label [for]="field.name + '_' + option.value" class="ml-3 text-sm text-secondary cursor-pointer">
+                          {{ option.label }}
+                        </label>
+                      </div>
+                    }
+                  </div>
+                  @if (getSelectedValues(field.name).length > 0) {
+                    <div class="mt-3">
+                      <span class="text-sm text-secondary">Seleccionados:</span>
+                      <div class="flex flex-wrap gap-2 mt-2">
+                        @for (item of getSelectedLabels(field); track item.value) {
+                          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                            {{ item.label }}
+                            <button type="button" 
+                                    class="ml-1.5 inline-flex text-primary focus:outline-none"
+                                    (click)="removeSelection(field.name, item.value)">
+                              &times;
+                            </button>
+                          </span>
+                        }
+                      </div>
+                    </div>
+                  }
+                  
+                  <!-- Mensajes de error -->
+                  @if (isFieldInvalid(field.name)) {
+                    <div class="p-3 rounded-md bg-delete/10 border border-delete text-delete text-sm">
+                      @if (hasError(field.name, 'required')) {
+                        <div>Debe seleccionar al menos una opción</div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+
+          <!-- Botones de acción -->
+          <div class="flex flex-col sm:flex-row gap-3 justify-center mt-8">
+            <button type="submit"
+              class="px-4 py-2 bg-success text-primary rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50"
+              [disabled]="!formGroup.valid">
+              Enviar
+            </button>
+            <button type="button"
+              (click)="close()"
+              class="px-4 py-2 bg-close text-primary rounded-md hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2">
+              Cancelar
+            </button>
           </div>
+        </form>
       </div>
     </div>
   </div>
-  
+</div>

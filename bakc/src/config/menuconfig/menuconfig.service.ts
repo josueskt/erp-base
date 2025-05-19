@@ -67,8 +67,13 @@ WHERE mt.fk_route IS NULL;
     `)
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} menuconfig`;
+  async findOne(id: string) {
+ return await this.sql.query('SELECT a.id_u_r , b.name  ruta FROM user_routes a  INNER JOIN routs b on a.fk_route = b.id_route where fk_profile = $1 ',[id])
+  }
+
+  async findAllRoutesIsnotprofile(id,busqueda?){
+    return await this.sql.query('SELECT id_route value,name label from routs WHERE id_route  NOT IN(SELECT fk_route from user_routes where fk_profile = $1)',[id])
+    
   }
 
   update(id: number, updateMenuconfigDto: UpdateMenuconfigDto) {
